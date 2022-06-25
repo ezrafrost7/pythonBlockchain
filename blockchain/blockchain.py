@@ -3,17 +3,31 @@ import datetime, hashlib, json
 # class for a single block
 class Block:
 
-    def __init__(self, previousBlock, data):
-        self.blockNumber = previousBlock.blockNumber + 1
+    def __init__(self, data, previousBlock):
+
+        # this is for the initial block
+        if previousBlock == None:
+            self.blockNumber = 0
+            self.blockHash = 0
+        
+        else:
+            self.blockNumber = previousBlock.blockNumber + 1
+            self.previousHash = previousBlock.blockHash
+        
         self.timeStamp = str(datetime.datetime.now())
         self.data = data
-        self.previousHash = previousBlock.blockHash
         self.blockHash = hash(self)
 
     # function to hash the block
     def hash(self):
         encodedBlock = json.dumps(self,sort_keys=True).encode()
         return hashlib.sha256(encodedBlock).hexdigest()
+    
+    # makes the block JSON readable
+    def toJson(self):
+        obj = json.dumps(self, default=lambda o: o.__dict__)
+        obj = json.loads(obj)
+        return(obj)
 
 
 # whole blockchain class
@@ -22,17 +36,14 @@ class Blockchain:
     # upon init the blockchain intiates
     def __init__(self):
         self.chain = []
-        initBlock = {
-            'blockHash' : 0,
-            'blockNumber' : 0
-        }
         data = {
             'message' : 'Initial block'
         }
-        self.addNextBlock(initBlock, data)
+        initBlock = Block(data=data, previousBlock=None)
+        self.addNextBlock(initBlock)
 
     # this adds the next block to the blockchain
-    def addNextBlock(self, block, data):
+    def addNextBlock(self, block):
         self.chain.append(block)
         return block
     
@@ -47,10 +58,15 @@ class Blockchain:
 
         while blockIndex < len(chain):
             block = chain[blockIndex]
-            if block['previousHash'] != self.hash(previousBlock):
+            if block.previousHash != self.hash(previousBlock):
                 return False
 
             previousBlock = block
             blockIndex += 1
         
         return True
+    
+    # creation of a new block
+    def createBlock(self,data):
+        newBlock = Block(previousBlock=self.previousBlock(), data=data)
+        return newBlock
