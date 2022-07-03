@@ -1,9 +1,12 @@
-from flask import Flask
+import json
+from flask import Flask, jsonify
+from flask_cors import CORS
 from flask_restful import Resource, Api
 from blockchain.blockchain import Blockchain
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 #create blockchain instance
 _blockchain = Blockchain()
@@ -14,7 +17,8 @@ class chain(Resource):
     # the get request
     def get(self):
         data = _blockchain.previousBlock()
-        return {'data':data.toJson()}, 200
+        data = data.toJson()
+        return {'data':data}, 200
 
 class block(Resource):
 
@@ -26,12 +30,20 @@ class block(Resource):
             }
         )
         _blockchain.addNextBlock(newBlock)
-        return {'data':newBlock.toJson()}, 200
+        data = newBlock.toJson()
+        return {'data':data}, 200
+
+class segment(Resource):
+
+    def get(self):
+        segment = _blockchain.displayChain(_blockchain.chain)
+        return{"data":segment}, 200
 
 
 # add resources to the api
 api.add_resource(chain, '/chain')
 api.add_resource(block, '/block')
+api.add_resource(segment, '/segment')
 
 
 # run the flask app

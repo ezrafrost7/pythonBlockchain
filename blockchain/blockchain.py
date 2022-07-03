@@ -70,3 +70,11 @@ class Blockchain:
     def createBlock(self,data):
         newBlock = Block(previousBlock=self.previousBlock(), data=data)
         return newBlock
+    
+    # display parts of the chain
+    def displayChain(self, chain):
+        chainSegment = []
+        for block in chain:
+            chainSegment.append(block.toJson())
+        
+        return chainSegment
