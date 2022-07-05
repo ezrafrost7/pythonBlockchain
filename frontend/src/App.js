@@ -4,6 +4,7 @@ import Block from './components/block';
 import BlockData from './components/blockdata';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import AddData from './components/adddata';
 
 
 class App extends Component {
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = 'http://127.0.0.1:5000/segment'
+    const url = 'http://127.0.0.1:5000/chain'
 
     fetch(url)
       .then(function (response) {
@@ -86,7 +87,7 @@ class App extends Component {
             </table>
           }
           {showHideAddData &&
-            <div>Add to the blockchain here!</div>
+            <div><AddData /></div>
           }
         </div>
       </React.Fragment>
