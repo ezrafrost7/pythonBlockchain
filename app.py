@@ -1,8 +1,7 @@
 import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_restful import Resource, Api
-from blockchain.blockchain import Blockchain
+from blockchain.blockchain import Blockchain, Block
 
 app = Flask(__name__)
 CORS(app)
@@ -43,6 +42,7 @@ def block():
     if request.method == 'POST':
 
         data = request.data.decode()
+        data = json.loads(data)
 
         newBlock = _blockchain.createBlock(
             data = data
@@ -52,6 +52,19 @@ def block():
         data = newBlock.toJson()
 
         return {'data':data}, 200
+
+# validating the blockchain endpoint
+@app.route('/validate',methods=['GET'])
+def validate():
+    
+    if request.method=='GET':
+        validity = _blockchain.chain_valid()
+        if validity:
+            data = "The current chain is valid"
+        if not validity:
+            data = "the current chain is INVALID"
+
+        return {'data': data}, 200
 
 # run the flask app
 if __name__ == '__main__':
