@@ -8,10 +8,8 @@ class BlockData extends Component {
 
         return (
             <td>
-                {Object.entries(data).map((value, key) => {
-                    return (
-                        `${key} : ${value}`
-                    )
+                {Object.entries(data).map(([index, value]) => {
+                    return `${index} : ${value}`
                 })}
             </td>
         )
