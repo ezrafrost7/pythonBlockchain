@@ -20,7 +20,7 @@ class Block:
 
     # function to hash the block
     def hash(self):
-        encodedBlock = json.dumps(self,sort_keys=True).encode()
+        encodedBlock = json.dumps(self,sort_keys=True, default=lambda o: o.__dict__).encode()
         return hashlib.sha256(encodedBlock).hexdigest()
     
     # makes the block JSON readable
@@ -52,13 +52,13 @@ class Blockchain:
         return self.chain[-1]
     
     # checks validity of chain, mostly compares previous hash
-    def chain_valid(self, chain):
-        previousBlock = chain[0]
+    def chain_valid(self):
+        previousBlock = self.chain[0]
         blockIndex = 1
 
-        while blockIndex < len(chain):
-            block = chain[blockIndex]
-            if block.previousHash != self.hash(previousBlock):
+        while blockIndex < len(self.chain):
+            block = self.chain[blockIndex]
+            if block.previousHash != previousBlock.hash():
                 return False
 
             previousBlock = block
