@@ -1,29 +1,35 @@
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_restful import Resource, Api
 from blockchain.blockchain import Blockchain
 
 app = Flask(__name__)
-api = Api(app)
 CORS(app)
 
 #create blockchain instance
 _blockchain = Blockchain()
 
 # classes and endpoints are written in here
-class chain(Resource):
+@app.route('/chain', methods=['GET','POST'])
+def chain():
 
     # the get request
-    def get(self):
+    if request.method=='GET':
+        segment = _blockchain.displayChain(_blockchain.chain)
+        return jsonify({"data":segment})
+
+    # the post request
+    if request.method == 'POST':
         data = _blockchain.previousBlock()
         data = data.toJson()
-        return {'data':data}, 200
+        return jsonify({'data':data})
 
-class block(Resource):
+@app.route('/block',methods=['GET',"POST"])
+def block():
 
     # the get request
-    def get(self):
+    if request.method == 'GET':
         newBlock = _blockchain.createBlock(
             data = {
                 'message' : 'this is a new block'
@@ -32,19 +38,20 @@ class block(Resource):
         _blockchain.addNextBlock(newBlock)
         data = newBlock.toJson()
         return {'data':data}, 200
+        
+    # the post request
+    if request.method == 'POST':
 
-class segment(Resource):
+        data = request.data.decode()
 
-    def get(self):
-        segment = _blockchain.displayChain(_blockchain.chain)
-        return{"data":segment}, 200
+        newBlock = _blockchain.createBlock(
+            data = data
+        )
+        
+        _blockchain.addNextBlock(newBlock)
+        data = newBlock.toJson()
 
-
-# add resources to the api
-api.add_resource(chain, '/chain')
-api.add_resource(block, '/block')
-api.add_resource(segment, '/segment')
-
+        return {'data':data}, 200
 
 # run the flask app
 if __name__ == '__main__':
