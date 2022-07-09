@@ -5,16 +5,12 @@ class BlockData extends Component {
     render() {
 
         const { data } = this.props
-        var blockData = JSON.stringify(data)
 
         return (
             <td>
-                {blockData}
-                {/* {Object.entries(blockData).map((value, key) => {
-                    return (
-                        `${key} : ${value}`
-                    )
-                })} */}
+                {Object.entries(data).map(([index, value]) => {
+                    return `${index} : ${value}`
+                })}
             </td>
         )
     }

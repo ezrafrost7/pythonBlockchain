@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import AddDataGet from './components/adddataget';
 import AddData from './components/adddata';
+import ValidateChain from './components/validatechain';
 
 
 class App extends Component {
@@ -58,10 +59,11 @@ class App extends Component {
               <Nav className="me-auto">
                 <Nav.Link onClick={() => this.hideComponent("showHideBlockchain")}>View All</Nav.Link>
                 <Nav.Link onClick={() => this.hideComponent("showHideAddDataGet")}>Add Data</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
               </Nav>
             </Container>
           </Navbar>
+
+          <ValidateChain />
 
           {showHideBlockchain &&
             <table className='table table-light'>

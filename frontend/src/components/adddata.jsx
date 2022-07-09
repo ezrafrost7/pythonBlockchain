@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Block from './block';
+import BlockData from './blockdata';
 
 export default class AddData extends Component {
     constructor(props) {
@@ -37,16 +39,28 @@ export default class AddData extends Component {
     }
 
     render() {
+        var block = this.state.block
 
         return (
-            <div>
+            <React.Fragment>
                 <h1>Add a Personal Message to the Blockchain</h1>
                 <form onSubmit={this.handleSubmit} className='m-3'>
                     <label className='m-3' >Message: </label>
                     <input id='messageInput' className='m-3' name="message" onChange={this.handleChange}></input>
                     <button type='submit' className='m-3'>Add Message</button>
                 </form>
-            </div>
+                {this.state.block ?
+                    <div className='text p-3'>
+                        <Block
+                            blockNumber={block.blockNumber}
+                            blockHash={block.blockHash}
+                            previousHash={block.previousHash}
+                            timeStamp={block.timeStamp}>
+                            <BlockData data={block.data} />
+                        </Block>
+                    </div> : null
+                }
+            </React.Fragment>
 
         );
     }
