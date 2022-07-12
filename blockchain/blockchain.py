@@ -8,15 +8,13 @@ class Block:
         # this is for the initial block
         if previousBlock == None:
             self.blockNumber = 0
-            self.blockHash = 0
         
         else:
             self.blockNumber = previousBlock.blockNumber + 1
-            self.previousHash = previousBlock.blockHash
+            self.previousHash = previousBlock.hash()
         
         self.timeStamp = str(datetime.datetime.now())
         self.data = data
-        self.blockHash = hash(self)
 
     # function to hash the block
     def hash(self):

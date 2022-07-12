@@ -36,6 +36,8 @@ export default class AddData extends Component {
         }).then(response => this.setState({
             block: response
         }))
+
+        event.preventDefault();
     }
 
     render() {

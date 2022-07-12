@@ -11,9 +11,9 @@ class ValidateChain extends Component {
         const url = 'http://127.0.0.1:5000/validate'
 
         fetch(url).then(function (response) {
-            console.log(response)
+            return response.json()
         }).then(response => this.setState({
-            valid: response
+            valid: response.data
         }))
     }
 

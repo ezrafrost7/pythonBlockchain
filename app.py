@@ -58,10 +58,10 @@ def block():
 def validate():
     
     if request.method=='GET':
-        validity = _blockchain.chain_valid()
-        if validity:
+        valid = _blockchain.chain_valid()
+        if valid:
             data = "The current chain is valid"
-        if not validity:
+        if not valid:
             data = "the current chain is INVALID"
 
         return {'data': data}, 200
