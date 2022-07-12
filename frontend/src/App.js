@@ -12,8 +12,12 @@ import ValidateChain from './components/validatechain';
 class App extends Component {
 
   state = {
-    showHideBlockchain: false,
+    showHideBlockchain: true,
     showHideAddDataGet: false,
+  }
+
+  componentDidMount() {
+    this.getChain()
   }
 
   hideComponent(name) {
@@ -23,8 +27,8 @@ class App extends Component {
         this.setState({ showHideAddDataGet: false })
         break;
       case "showHideAddDataGet":
-        this.setState({ showHideAddDataGet: true });
         this.setState({ showHideBlockchain: false });
+        this.setState({ showHideAddDataGet: true });
         break;
       default:
         this.setState({ showHideBlockchain: true });
@@ -70,10 +74,9 @@ class App extends Component {
               <thead>
                 <tr>
                   <th>Block Number</th>
-                  <th>Previous Hash</th>
+                  <th className='col-2'>Previous Hash</th>
                   <th>Time Stamp</th>
                   <th>Message</th>
-                  <th>Current Hash</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,7 +84,6 @@ class App extends Component {
                   return (
                     <Block
                       blockNumber={block.blockNumber}
-                      blockHash={block.blockHash}
                       previousHash={block.previousHash}
                       timeStamp={block.timeStamp}>
                       <BlockData data={block.data} />
