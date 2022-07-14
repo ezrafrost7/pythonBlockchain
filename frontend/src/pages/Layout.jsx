@@ -9,7 +9,7 @@ const Layout = () => {
         <>
             <Navbar bg="dark" variant="dark" sticky='top'>
                 <Container>
-                    <Navbar.Brand href="/">Welcome to the Blockchain</Navbar.Brand>
+                    <Navbar.Brand href="/">Welcome</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="/">
                             Home
