@@ -3,7 +3,7 @@ FROM node:16-alpine as build-step
 WORKDIR /frontend
 ENV PATH /frontend/node_modules/.bin:$PATH
 COPY /frontend/package.json ./yarn.lock
-COPY ./src ./src
+COPY ./frontend/src ./src
 RUN yarn install
 RUN yarn build
 
@@ -13,7 +13,7 @@ WORKDIR /app
 COPY --from=build-step /app/build ./build
 
 RUN mkdir ./api
-COPY api/requirements.txt api/api.py api/.flaskenv ./api/
+COPY ./requirements.txt api/api.py api/.flaskenv ./api/
 RUN pip install -r ./api/requirements.txt
 RUN FLASK_END production
 
