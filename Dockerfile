@@ -1,7 +1,7 @@
 # build the react front end
 FROM node:16-alpine as build-step
-WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR /frontend
+ENV PATH /frontend/node_modules/.bin:$PATH
 COPY package.json yarn.lock ./
 COPY ./src ./src
 RUN yarn install
