@@ -5,6 +5,7 @@ ENV PATH /frontend/node_modules/.bin:$PATH
 COPY /frontend/package.json ./
 COPY ./frontend/src ./src
 RUN npm install
+COPY ./frontend ./
 RUN npm run build
 
 # build the api with the client as static files
