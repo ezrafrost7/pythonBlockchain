@@ -24,8 +24,6 @@ services:
       - "5000:5000"
     volumes:
       - appdata:/var/www/
-    depends_on:
-      - mongodb
     networks:
       - frontend
       - blockchain
