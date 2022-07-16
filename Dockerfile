@@ -22,10 +22,10 @@ WORKDIR /
 RUN mkdir ./api
 COPY ./requirements.txt api/requirements.txt
 RUN pip install -r ./api/requirements.txt
+RUN pip install -e ./blockchain
 COPY ./app.py ./api
 COPY ./blockchain/blockchain.py ./api/blockchain
 ENV FLASK_APP=api/app.py
-ENV PYTHONPATH "${PYTHONPATH}:/api/"
 
 ENTRYPOINT [ "flask" ]
 CMD [ "run","--host=0.0.0.0","--port=5000" ]
