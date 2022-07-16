@@ -7,10 +7,9 @@ COPY ./frontend/src ./src
 RUN npm install
 COPY ./frontend ./
 RUN npm run build
-RUN npm start
 
 FROM nginx:alpine
-COPY --from=build /frontend/build /frontend/share/nginx/html
+COPY --from=build /frontend/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
