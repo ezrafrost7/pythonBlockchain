@@ -8,16 +8,23 @@ RUN npm install
 COPY ./frontend ./
 RUN npm run build
 
+FROM nginx:alpine
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
 # build the api with the client as static files
 FROM python:3.9
-WORKDIR /app
-COPY --from=build-step /app/build ./build
+WORKDIR /
 
 RUN mkdir ./api
-COPY ./requirements.txt api/api.py api/.flaskenv ./api/
+COPY ./requirements.txt api/requirements.txt
 RUN pip install -r ./api/requirements.txt
+COPY ./app.py ./api
+COPY ./blockchain ./api
 RUN FLASK_END production
 
-EXPOSE 3000
-WORKDIR /app/api
-CMD ["gunicorn","-b",":3000","api:app"]
+ENTRYPOINT [ "flask" ]
+CMD [ "run","--host=0.0.0.0","--port=5000" ]
