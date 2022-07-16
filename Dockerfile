@@ -24,7 +24,6 @@ COPY ./requirements.txt api/requirements.txt
 RUN pip install -r ./api/requirements.txt
 COPY ./app.py ./api
 COPY ./blockchain ./api
-RUN FLASK_END production
 
 ENTRYPOINT [ "flask" ]
 CMD [ "run","--host=0.0.0.0","--port=5000" ]
