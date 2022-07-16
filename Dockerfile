@@ -25,6 +25,7 @@ RUN pip install -r ./api/requirements.txt
 COPY ./app.py ./api
 COPY ./blockchain/blockchain.py ./api/blockchain
 ENV FLASK_APP=api/app.py
+ENV PYTHONPATH "${PYTHONPATH}:/api/"
 
 ENTRYPOINT [ "flask" ]
 CMD [ "run","--host=0.0.0.0","--port=5000" ]
