@@ -12,10 +12,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the docker-compose stack
+    - name: Build the Docker images
       run: |
         echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-        docker compose build docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
+        docker build . --file ./blockchain/Dockerfile --tag docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/blockchain:latest
+        docker build . --file ./frontend/Dockerfile --tag docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
+        docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/blockchain:latest
+        docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
         # docker build . --file Dockerfile --tag docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:$GITHUB_SHA
         # docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:$GITHUB_SHA
-        docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
+        # docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest

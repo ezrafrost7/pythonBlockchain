@@ -1,8 +1,7 @@
 services:
   client:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: .
+    image: "ezrafrost7/frontend:latest"
     tty: true
     ports:
       - "3000:3000"
@@ -13,9 +12,8 @@ services:
       - frontend
 
   api:
-    build:
-      context: ./blockchain
-      dockerfile: Dockerfile
+    build: .
+    image: "ezrafrost7/blockchain:latest"
     command: gunicorn --bind 0.0.0.0:5000 app:app
     ports:
       - "5000:5000"
