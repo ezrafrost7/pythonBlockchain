@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - frontend
+
+  api:
+    build:
+      context: ./blockchain
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    ports:
+      - "5000:5000"
+    volumes:
+      - appdata:/var/www/
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - blockchain
+
+networks:
+  frontend:
+    driver: bridge
+  blockchain:
+    driver: bridge
+volumes:
+  mongodbdata:
+    driver: local
+  appdata:
+    driver: local
