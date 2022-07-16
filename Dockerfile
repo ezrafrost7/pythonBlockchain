@@ -23,7 +23,7 @@ RUN mkdir ./api
 COPY ./requirements.txt api/requirements.txt
 RUN pip install -r ./api/requirements.txt
 COPY ./app.py ./api
-COPY ./blockchain ./api
+COPY ./blockchain/blockchain.py ./api/blockchain
 ENV FLASK_APP=api/app.py
 
 ENTRYPOINT [ "flask" ]
