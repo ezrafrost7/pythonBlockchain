@@ -17,14 +17,13 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # build the api with the client as static files
 FROM python:3.9
-WORKDIR /
+WORKDIR /blockchain
 
 RUN mkdir ./api
-COPY ./requirements.txt api/requirements.txt
+COPY ./requirements.txt ./api/requirements.txt
 RUN pip install -r ./api/requirements.txt
-RUN pip install -e ./blockchain
 COPY ./app.py ./api
-COPY ./blockchain/blockchain.py ./api/blockchain
+COPY ./blockchain.py ./api
 ENV FLASK_APP=api/app.py
 
 ENTRYPOINT [ "flask" ]
