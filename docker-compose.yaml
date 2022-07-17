@@ -1,0 +1,35 @@
+services:
+  client:
+    build: .
+    image: "ezrafrost7/frontend:latest"
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - frontend
+
+  api:
+    build: .
+    image: "ezrafrost7/blockchain:latest"
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    ports:
+      - "5000:5000"
+    volumes:
+      - appdata:/var/www/
+    networks:
+      - frontend
+      - blockchain
+
+networks:
+  frontend:
+    driver: bridge
+  blockchain:
+    driver: bridge
+volumes:
+  mongodbdata:
+    driver: local
+  appdata:
+    driver: local

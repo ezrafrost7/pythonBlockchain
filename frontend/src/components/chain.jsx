@@ -13,7 +13,7 @@ export default class Chain extends Component {
     }
 
     getChain() {
-        const url = 'http://127.0.0.1:5000/chain'
+        const url = '/chain'
 
         fetch(url)
             .then(function (response) {
