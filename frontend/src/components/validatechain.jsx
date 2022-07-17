@@ -8,7 +8,7 @@ class ValidateChain extends Component {
 
     componentDidMount() {
 
-        const url = 'http://127.0.0.1:5000/validate'
+        const url = '/validate'
 
         fetch(url).then(function (response) {
             return response.json()

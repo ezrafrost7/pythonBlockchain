@@ -24,7 +24,7 @@ export default class AddData extends Component {
     }
 
     handleSubmit(event) {
-        const url = 'http://127.0.0.1:5000/block';
+        const url = '/block';
 
         var data = this.state
 

@@ -6,7 +6,7 @@ export default class AddDataGet extends Component {
     state = {}
 
     handleGetButton() {
-        const url = 'http://127.0.0.1:5000/block';
+        const url = '/block';
 
         fetch(url)
             .then(function (response) {
