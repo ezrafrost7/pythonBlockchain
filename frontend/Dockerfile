@@ -2,14 +2,14 @@
 FROM node:latest as build
 
 # Set working directory
-WORKDIR /app
-ADD . /app
+WORKDIR /
+ADD . /
 
 # Add /app/node_modules/.bin to environment variables
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /node_modules/.bin:$PATH
 
 # Install all app dependencies
-COPY package.json /app/package.json
+COPY package.json /package.json
 RUN npm install
 RUN npm install react-scripts -g
 
@@ -19,7 +19,7 @@ RUN npm run build
 # Create image based on nginx and deploy our built React app
 FROM nginx:1.17-alpine
 
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /build /usr/share/nginx/html
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
