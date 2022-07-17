@@ -9,6 +9,7 @@ ADD . /
 ENV PATH /node_modules/.bin:$PATH
 
 # Install all app dependencies
+COPY ./frontend ./
 COPY ./frontend/package.json ./package.json
 RUN npm install
 RUN npm install react-scripts -g
