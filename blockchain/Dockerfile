@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 COPY ./blockchain/requirements.txt ./app/requirements.txt
 RUN pip install -r ./app/requirements.txt
 COPY ./blockchain ./app
-ENV FLASK_APP=/app/app
+ENV FLASK_APP=/app
 
 ENTRYPOINT [ "flask" ]
 CMD [ "run","--host=0.0.0.0","--port=5000" ]
