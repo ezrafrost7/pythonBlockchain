@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turn off buffering
 ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.txt ./requirements.txt
+COPY ./blockchain/requirements.txt ./requirements.txt
 RUN pip install -r ./requirements.txt
 COPY ./app.py ./
 COPY ./blockchain ./
