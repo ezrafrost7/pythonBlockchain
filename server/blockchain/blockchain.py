@@ -70,9 +70,9 @@ class Blockchain:
         return newBlock
     
     # display parts of the chain
-    def displayChain(self, chain):
+    def displayChain(self):
         chainSegment = []
-        for block in chain:
+        for block in self.chain:
             chainSegment.append(block.toJson())
         
         return chainSegment
